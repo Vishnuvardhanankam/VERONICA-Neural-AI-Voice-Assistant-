@@ -1,0 +1,8 @@
+SpeechRecognition
+wikipedia
+requests
+gTTS
+pygame
+flask
+flask-cors
+pyaudio

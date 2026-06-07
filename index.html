@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VERONICA — Neural AI Interface</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Exo+2:wght@100;200;300;400;700;900&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Particle canvas background -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- Noise overlay -->
+<div class="noise"></div>
+
+<!-- Boot sequence overlay -->
+<div id="boot-screen">
+  <div class="boot-content">
+    <div class="boot-logo">VERONICA</div>
+    <div class="boot-sub">NEURAL INTERFACE v2.0</div>
+    <div class="boot-lines" id="boot-lines"></div>
+    <div class="boot-bar-wrap"><div class="boot-bar" id="boot-bar"></div></div>
+    <div class="boot-pct" id="boot-pct">0%</div>
+  </div>
+</div>
+
+<!-- Server offline banner -->
+<div id="conn-error" class="conn-error">
+  <span class="conn-icon">⬡</span>
+  NEURAL LINK SEVERED — Run: <strong>python server.py</strong>
+</div>
+
+<!-- ============ MAIN UI ============ -->
+<div class="ui" id="main-ui">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="logo-wrap">
+        <div class="logo-ring"></div>
+        <span class="logo">VER<em>O</em>NICA</span>
+      </div>
+      <div class="tagline">NEURAL AI SYSTEM</div>
+    </div>
+
+    <div class="topbar-center">
+      <div class="status-pill" id="status-pill">
+        <span class="pill-dot" id="pill-dot"></span>
+        <span id="status-text">INITIALIZING</span>
+      </div>
+    </div>
+
+    <div class="topbar-right">
+      <div class="hud-stat">
+        <span class="hud-val" id="header-time">--:--:--</span>
+        <span class="hud-label">LOCAL TIME</span>
+      </div>
+      <div class="hud-stat">
+        <span class="hud-val" id="header-date">---</span>
+        <span class="hud-label">DATE</span>
+      </div>
+      <div class="hud-stat">
+        <span class="hud-val" id="ai-status" style="color:var(--amber)">LINKING</span>
+        <span class="hud-label">AI ENGINE</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar-left">
+
+      <!-- System monitor -->
+      <div class="panel" style="animation-delay:0.1s">
+        <div class="panel-header"><span class="ph-icon">◈</span> SYSTEM MONITOR</div>
+        <div class="monitor-grid">
+          <div class="mon-item">
+            <div class="mon-label">VOICE ENGINE</div>
+            <div class="mon-bar"><div class="mon-fill" style="width:92%;background:var(--cyan)"></div></div>
+            <div class="mon-val" style="color:var(--cyan)">ACTIVE</div>
+          </div>
+          <div class="mon-item">
+            <div class="mon-label">SPEECH RECOG</div>
+            <div class="mon-bar"><div class="mon-fill" style="width:88%;background:var(--green)"></div></div>
+            <div class="mon-val" style="color:var(--green)">ONLINE</div>
+          </div>
+          <div class="mon-item">
+            <div class="mon-label">LOCAL AI</div>
+            <div class="mon-bar"><div class="mon-fill" id="ai-bar" style="width:60%;background:var(--amber)"></div></div>
+            <div class="mon-val" id="ai-mon-val" style="color:var(--amber)">CHECKING</div>
+          </div>
+          <div class="mon-item">
+            <div class="mon-label">FACT ENGINE</div>
+            <div class="mon-bar"><div class="mon-fill" style="width:100%;background:var(--cyan)"></div></div>
+            <div class="mon-val" style="color:var(--cyan)">READY</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick commands -->
+      <div class="panel flex-grow" style="animation-delay:0.2s">
+        <div class="panel-header"><span class="ph-icon">◈</span> COMMAND LIBRARY</div>
+        <div class="cmd-list">
+          <div class="cmd-item" onclick="sendCommand('what time is it')">
+            <span class="cmd-icon">⏱</span><span>Current Time</span>
+          </div>
+          <div class="cmd-item" onclick="sendCommand('what is the date')">
+            <span class="cmd-icon">📅</span><span>Today's Date</span>
+          </div>
+          <div class="cmd-item" onclick="sendCommand('what is artificial intelligence')">
+            <span class="cmd-icon">🧠</span><span>What is AI</span>
+          </div>
+          <div class="cmd-item" onclick="sendCommand('who is Elon Musk')">
+            <span class="cmd-icon">👤</span><span>Who is Elon Musk</span>
+          </div>
+          <div class="cmd-item" onclick="sendCommand('recipe for biryani')">
+            <span class="cmd-icon">🍳</span><span>Recipe: Biryani</span>
+          </div>
+          <div class="cmd-item" onclick="sendCommand('weather in Mumbai')">
+            <span class="cmd-icon">🌤</span><span>Weather: Mumbai</span>
+          </div>
+          <div class="cmd-item" onclick="sendCommand('fact check vaccines cause autism')">
+            <span class="cmd-icon">🔍</span><span>Fact Check</span>
+          </div>
+          <div class="cmd-item" onclick="sendCommand('take a note')">
+            <span class="cmd-icon">📝</span><span>Take a Note</span>
+          </div>
+          <div class="cmd-item" onclick="sendCommand('read my notes')">
+            <span class="cmd-icon">📖</span><span>Read Notes</span>
+          </div>
+          <div class="cmd-item" onclick="sendCommand('google python tutorials')">
+            <span class="cmd-icon">🔎</span><span>Google Search</span>
+          </div>
+          <div class="cmd-item" onclick="sendCommand('youtube lo fi music')">
+            <span class="cmd-icon">▶</span><span>YouTube Search</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tech stack -->
+      <div class="panel" style="animation-delay:0.3s">
+        <div class="panel-header"><span class="ph-icon">◈</span> TECH STACK</div>
+        <div class="tech-grid">
+          <div class="tech-badge">OLLAMA</div>
+          <div class="tech-badge">LLAMA3</div>
+          <div class="tech-badge">FLASK</div>
+          <div class="tech-badge">gTTS</div>
+          <div class="tech-badge">PYGAME</div>
+          <div class="tech-badge">SR API</div>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- CENTER STAGE -->
+    <main class="center-stage">
+
+      <!-- Hex grid background -->
+      <div class="hex-grid"></div>
+
+      <!-- Corner brackets -->
+      <div class="bracket tl"></div>
+      <div class="bracket tr"></div>
+      <div class="bracket bl"></div>
+      <div class="bracket br"></div>
+
+      <!-- Scan line -->
+      <div class="scan-line"></div>
+
+      <!-- CORE ORB -->
+      <div class="orb-system">
+
+        <!-- Outer rings -->
+        <div class="orbit orbit-1">
+          <div class="orbit-dot"></div>
+        </div>
+        <div class="orbit orbit-2">
+          <div class="orbit-dot"></div>
+        </div>
+        <div class="orbit orbit-3"></div>
+
+        <!-- Tick ring -->
+        <div class="tick-ring" id="tick-ring"></div>
+
+        <!-- Core -->
+        <div class="core" id="main-orb" onclick="triggerListen()">
+          <div class="core-inner">
+            <div class="core-glow"></div>
+            <div class="logo-img-wrap" id="mic-symbol">
+              <img src="/logo.png" alt="Veronica Logo" class="orb-logo" id="orb-logo"/>
+            </div>
+            <div class="core-status" id="core-status">TAP TO ACTIVATE</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Waveform visualizer -->
+      <div class="wave-container">
+        <div class="waveform" id="waveform"></div>
+      </div>
+
+      <!-- Status display -->
+      <div class="status-display" id="status-display">NEURAL INTERFACE READY</div>
+
+      <!-- Last response bubble -->
+      <div class="response-bubble" id="response-bubble">
+        <div class="rb-quote">"</div>
+        <div id="last-response">Hello. I am Veronica. Your neural AI assistant is online.</div>
+        <div class="rb-quote closing">"</div>
+      </div>
+
+      <!-- Bottom data strip -->
+      <div class="data-strip">
+        <div class="ds-item"><span class="ds-label">SESSION</span><span class="ds-val" id="session-time">00:00:00</span></div>
+        <div class="ds-sep">|</div>
+        <div class="ds-item"><span class="ds-label">COMMANDS</span><span class="ds-val" id="cmd-count">0</span></div>
+        <div class="ds-sep">|</div>
+        <div class="ds-item"><span class="ds-label">MODE</span><span class="ds-val">VOICE + TEXT</span></div>
+        <div class="ds-sep">|</div>
+        <div class="ds-item"><span class="ds-label">WAKE WORD</span><span class="ds-val" style="color:var(--cyan)">"VERONICA"</span></div>
+      </div>
+
+    </main>
+
+    <!-- RIGHT SIDEBAR -->
+    <aside class="sidebar-right">
+
+      <!-- Conversation log -->
+      <div class="panel flex-grow" style="animation-delay:0.1s;overflow:hidden;display:flex;flex-direction:column;">
+        <div class="panel-header">
+          <span class="ph-icon">◈</span> NEURAL LOG
+          <span class="log-count" id="log-count">0</span>
+        </div>
+        <div class="chat-log" id="chat-log">
+          <div class="chat-entry ve entry-boot">
+            <div class="entry-meta">VERONICA · BOOT</div>
+            <div class="entry-text">Neural interface initialized. All systems nominal.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Capability matrix -->
+      <div class="panel" style="animation-delay:0.2s">
+        <div class="panel-header"><span class="ph-icon">◈</span> CAPABILITY MATRIX</div>
+        <div class="cap-grid">
+          <div class="cap-item online"><span class="cap-dot"></span>Weather</div>
+          <div class="cap-item online"><span class="cap-dot"></span>Wikipedia</div>
+          <div class="cap-item online"><span class="cap-dot"></span>Recipes</div>
+          <div class="cap-item online"><span class="cap-dot"></span>Fact Check</div>
+          <div class="cap-item online"><span class="cap-dot"></span>Notes</div>
+          <div class="cap-item online"><span class="cap-dot"></span>Google</div>
+          <div class="cap-item online"><span class="cap-dot"></span>YouTube</div>
+          <div class="cap-item" id="ai-cap"><span class="cap-dot"></span>Local AI</div>
+        </div>
+      </div>
+
+      <!-- Mini stats -->
+      <div class="panel" style="animation-delay:0.3s">
+        <div class="panel-header"><span class="ph-icon">◈</span> SESSION STATS</div>
+        <div class="mini-stats">
+          <div class="ms-row">
+            <span class="ms-label">Queries Handled</span>
+            <span class="ms-val" id="stat-queries">0</span>
+          </div>
+          <div class="ms-row">
+            <span class="ms-label">Voice Commands</span>
+            <span class="ms-val" id="stat-voice">0</span>
+          </div>
+          <div class="ms-row">
+            <span class="ms-label">Text Commands</span>
+            <span class="ms-val" id="stat-text">0</span>
+          </div>
+          <div class="ms-row">
+            <span class="ms-label">Uptime</span>
+            <span class="ms-val" id="stat-uptime">00:00</span>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- COMMAND INPUT BAR -->
+  <div class="input-bar">
+    <div class="input-bar-inner">
+      <div class="input-prefix">
+        <span class="ip-chevron">›</span>
+        <span class="ip-label">NEURAL INPUT</span>
+      </div>
+      <input type="text" id="cmd-input"
+             placeholder="Speak your command or type here..."
+             autocomplete="off" spellcheck="false"/>
+      <div class="input-actions">
+        <button class="action-btn exec-btn" onclick="submitCommand()">
+          <span>EXECUTE</span>
+          <span class="btn-shortcut">↵</span>
+        </button>
+        <button class="action-btn mic-btn" id="mic-btn" onclick="triggerListen()">
+          <svg width="14" height="14" viewBox="0 0 32 32" fill="currentColor">
+            <rect x="11" y="2" width="10" height="18" rx="5"/>
+            <path d="M6 16c0 5.523 4.477 10 10 10s10-4.477 10-10" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <line x1="16" y1="26" x2="16" y2="30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          <span>MIC</span>
+        </button>
+        <button class="action-btn stop-btn" id="stop-btn" onclick="stopVeronica()">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+            <rect x="1" y="1" width="10" height="10" rx="1"/>
+          </svg>
+          <span>STOP</span>
+        </button>
+        <button class="action-btn clear-btn" onclick="clearLog()">CLEAR</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

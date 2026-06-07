@@ -1,0 +1,7 @@
+Claim: the earth is flat
+========================================
+
+VERDICT: LIKELY FALSE
+CONFIDENCE: HIGH
+EXPLANATION: The overwhelming scientific evidence and observations from various fields of science, including astronomy, geology, and physics, all confirm that the Earth is an oblate spheroid, meaning it is slightly flattened at the poles and bulging at the equator. Numerous spacecraft have also imaged the curvature of the Earth, further supporting its spherical shape.
+ADVICE: Consult reputable scientific sources and educational materials to learn more about the evidence supporting a round Earth.
