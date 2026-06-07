@@ -3,7 +3,7 @@
 # ===================================================
 
 # Weather API (free key from openweathermap.org)
-WEATHER_API_KEY = "b692ce6086789517bfa79d41561fd039"
+WEATHER_API_KEY = "YOUR API KEYS"
 
 # Ollama local AI
 OLLAMA_URL   = "http://127.0.0.1:11434/api/generate"
