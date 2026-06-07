@@ -36,27 +36,45 @@ Canvas API
 📂 Project Structure
 Plain text
 veronica/
+
 │
+
 ├── config.py
+
 ├── state.py
+
 ├── voice.py
+
 ├── skills.py
+
 ├── router.py
+
 ├── server.py
+
 │
+
 ├── index.html
+
 ├── style.css
+
 ├── app.js
+
 │
+
 ├── requirements.txt
+
 │
+
 ├── notes/
+
 ├── recipes/
+
 └── fact_checks/
+
 ⚙️ Installation
 1. Clone Repository
 Bash
-git clone https://github.com/yourusername/veronica.git
+git clone https://github.com/Vishnuvardhanankam/veronica.git
 cd veronica
 2. Install Dependencies
 Bash
